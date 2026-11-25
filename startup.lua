@@ -50,7 +50,7 @@ local function main()
         local id, message = rednet.receive()
 
         if id == 229 then
-            message = json.decode(aes.Decrypt(message, key))
+            message = json.decode(aes.TableToString(aes.Decrypt(message, key)))
             gData = message
             firstData = true
             if oldStatus ~= message.status then
