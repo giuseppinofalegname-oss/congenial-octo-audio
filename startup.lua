@@ -47,10 +47,12 @@ local key = aes.StringToKey("CCTweakedReactor", 1024)
 local function main()
     local oldStatus = false
     while true do
-        local id, message = json.decode(aes.Decrypt(rednet.receive(), key))
-        gData = message
-        firstData = true
-        if id == 4 then
+        local id, message = rednet.receive()
+
+        if id == 229 then
+            message = json.decode(aes.Decrypt(message, key))
+            gData = message
+            firstData = true
             if oldStatus ~= message.status then
                 term.clear()
             end
